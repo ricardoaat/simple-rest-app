@@ -1,1 +1,27 @@
+# vscode
+.vscode
+
+# Gradle
+.gradle
 build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamechache
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+.settings
+.project
+.classpath

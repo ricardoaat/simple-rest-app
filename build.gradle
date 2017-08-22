@@ -1,1 +1,39 @@
 apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
+
+webAppDirName = 'WebContent'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "joda-time:joda-time:2.9"
+    compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25.1'
+    testCompile "junit:junit:4.12"
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+gretty {
+    httpPort = 8080
+    contextPath = '/simple-rest'
+    servletContainer = 'jetty9'
+
+    loggingLevel = 'ALL'
+}
+/*
+farm {
+    webapp 'build/libs/simple-rest-app.war'
+}
+*/
