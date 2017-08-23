@@ -1,13 +1,6 @@
 # vscode
 .vscode
 
-# Gradle
-.gradle
-build/
-gradle-app.setting
-!gradle-wrapper.jar
-.gradletasknamechache
-
 # Package Files #
 *.jar
 *.war
@@ -15,6 +8,13 @@ gradle-app.setting
 *.zip
 *.tar.gz
 *.rar
+
+# Gradle
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamechache
 
 # Compiled class file
 *.class
