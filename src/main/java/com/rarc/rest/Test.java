@@ -16,9 +16,9 @@ public class Test  {
     }
 
     @GET
-    @Path("/ve")
+    @Path("/ison")
     @Produces(MediaType.TEXT_PLAIN)
     public String sayPlainTextHello() {
-        return "Hello Jersey";
+        return "Server UP";
     }
 }
