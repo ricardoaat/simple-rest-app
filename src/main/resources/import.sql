@@ -1,0 +1,1 @@
+INSERT INTO users(id, username) values (nextval('user_seq'), 'le first mofo');

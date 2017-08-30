@@ -27,15 +27,15 @@ repositories {
     mavenCentral()
 }
 
-ext {
-    springBootVersion = '1.5.6.RELEASE'
-}
-
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile("com.h2database:h2")
     //compile "org.springframework.boot:spring-boot-starter-mobile:$springBootVersion"
-    //compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-rest"
     //compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+
+    compile "org.postgresql:postgresql:42.1.4"
     compile 'joda-time:joda-time:2.9'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testCompile 'junit:junit:4.12'
