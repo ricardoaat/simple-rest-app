@@ -18,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-@SuppressWarnings("SpringJavaAutowiringInspection")
+//@SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -42,6 +42,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public ExceptionHandlerFilter exceptionHandlerFilterBean() throws Exception {
+        return new ExceptionHandlerFilter();
+    }   
+    
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationTokenFilter();
@@ -75,9 +80,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
 
+       
         // Custom JWT based security filter
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+        // Custom Exception Filter for filter
+        httpSecurity
+                .addFilterBefore(exceptionHandlerFilterBean(), JwtAuthenticationTokenFilter.class);
 
         // disable page caching
         httpSecurity.headers().cacheControl();
