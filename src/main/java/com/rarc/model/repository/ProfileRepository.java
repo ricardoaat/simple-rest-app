@@ -1,5 +1,6 @@
-package com.rarc.model;
+package com.rarc.model.repository;
 
+import com.rarc.model.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 

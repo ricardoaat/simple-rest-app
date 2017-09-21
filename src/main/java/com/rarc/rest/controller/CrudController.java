@@ -1,4 +1,4 @@
-package com.rarc.rest;
+package com.rarc.rest.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.rarc.auth.repository.UserRepository;
 import com.rarc.model.Profile;
-import com.rarc.model.ProfileRepository;
+import com.rarc.model.repository.ProfileRepository;
 
 
 @RestController
@@ -32,7 +32,7 @@ public class CrudController {
         Iterable<Profile> profiles = profileRepository.findAll();
         profiles.iterator().forEachRemaining(profileList::add);
         if(profileList.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Profile>>(HttpStatus.NO_CONTENT);
         }
 
         return new ResponseEntity<List<Profile>>(profileList, HttpStatus.OK);

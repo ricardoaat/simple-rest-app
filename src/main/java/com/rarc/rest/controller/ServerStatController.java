@@ -1,4 +1,4 @@
-package com.rarc.rest;
+package com.rarc.rest.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,12 +20,12 @@ public class ServerStatController {
 
 
     @RequestMapping(path = "/status", method = RequestMethod.GET)
-    public ResponseEntity<String> getStatus(){
+    public ResponseEntity<Status> getStatus(){
         Status status = new Status();
         status.setStatus("RUNNING BIIIIIIIIIIITCH");
         status.setCode(1);
         System.out.println("Fetched status");
-        return new ResponseEntity(status, HttpStatus.OK);
+        return new ResponseEntity<>(status, HttpStatus.OK);
     }
     
     @RequestMapping(path = "/test", method = RequestMethod.GET)
