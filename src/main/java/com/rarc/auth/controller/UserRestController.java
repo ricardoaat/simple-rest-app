@@ -2,6 +2,7 @@ package com.rarc.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import com.rarc.auth.JwtUser;
 import com.rarc.auth.service.UserServiceImpl;
 import com.rarc.model.auth.RequestUser;
 import com.rarc.model.auth.User;
+import com.rarc.rest.ApiError;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -49,8 +51,11 @@ public class UserRestController {
         newUser.setPassword(user.getPassword());
         newUser.setUsername(user.getUsername());
 
+        //ToDo: Better response
         if (userServiceImpl.isUserExist(newUser)){
-            return ResponseEntity.badRequest().body("User exist");
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST);
+            error.setMessage("User already exist");
+            return new ResponseEntity<ApiError>(error, HttpStatus.BAD_REQUEST);
         }
 
         userServiceImpl.save(newUser);

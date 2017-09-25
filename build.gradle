@@ -39,6 +39,7 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.1"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1"
     compile 'joda-time:joda-time:2.9'
+    compile "org.jadira.usertype:usertype.core:5.0.0.GA"
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testCompile 'junit:junit:4.12'
 }

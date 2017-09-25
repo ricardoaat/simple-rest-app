@@ -47,4 +47,12 @@ public class UserServiceImpl {
 
         return userRepository.exists(exampleUser);
     }
+
+    public User findByUserName(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User findOneById(Long id) {
+        return userRepository.findOne(id);
+    }
 }

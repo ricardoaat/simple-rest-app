@@ -11,6 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import com.rarc.model.auth.User;
 
 @Entity
@@ -20,51 +26,126 @@ public class Profile {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "profiles_seq")
-    @SequenceGenerator(name = "profiles_seq", sequenceName = "profiles_seq", allocationSize = 1)    
+    @SequenceGenerator(name = "profiles_seq", sequenceName = "profiles_seq", allocationSize = 1)
+    @JsonIgnore
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "bio", length = 500)
-    @Size(min = 4, max = 500)
+    @Size(min = 2, max = 500)
     private String bio;
 
     @Column(name = "address", length = 300)
     @Size(min = 4, max = 300)
     private String address;
 
+    @Column(name = "country", length = 300)
+    @Size(min = 2, max = 300)
+    private String country;
 
-    public Long getId(){
-        return id;
-    }
+    @Column(name = "photoUrl", length = 300)
+    @Size(min = 2, max = 300)
+    private String photoUrl;
 
-    public void setId(Long id){
-        this.id = id;
-    }
+    @Column(name = "sex", length = 300)
+    @Size(min = 2, max = 300)
+    private String sex;
 
-    public User getUser(){
-        return user;
-    }
+    @Column(name = "birthdate")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @JsonSerialize(using = DateTimeSerializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")    
+    private DateTime birthdate;
 
-    public void setUser(User user){
-        this.user = user;
-    }
+    @Column(name = "phone", length = 30)
+    @Size(min = 5, max = 30)
+    private String phone;
 
-    public String getBio(){
-        return bio;
-    }
+    @Column(name = "website", length = 500)
+    @Size(min = 2, max = 500)
+    private String website;
 
-    public void setBio(String bio){
-        this.bio = bio;
-    }
+    public Long getId() {
+        return this.id;
+     }
+   
+     public void setId(Long value) {
+        this.id = value;
+     }
 
-    public String getAddress(){
-        return address;
-    }
+     public User getUser() {
+        return this.user;
+     }
+   
+     public void setUser(User value) {
+        this.user = value;
+     }
 
-    public void setAddress(String address){
-        this.address = address;
-    }
+    public String getAddress() {
+        return this.address;
+     }
+   
+     public void setAddress(String value) {
+        this.address = value;
+     }
+   
+     public String getCountry() {
+        return this.country;
+     }
+   
+     public void setCountry(String value) {
+        this.country = value;
+     }
+   
+     public String getSex() {
+        return this.sex;
+     }
+   
+     public void setSex(String value) {
+        this.sex = value;
+     }
+   
+     public DateTime getBirthdate() {
+        return this.birthdate;
+     }
+   
+     public void setBirthdate(DateTime value) {
+        this.birthdate = value;
+     }
+   
+     public String getPhone() {
+        return this.phone;
+     }
+   
+     public void setPhone(String value) {
+        this.phone = value;
+     }
+   
+     public String getPhotoUrl() {
+        return this.photoUrl;
+     }
+   
+     public void setPhotoUrl(String value) {
+        this.photoUrl = value;
+     }
+   
+     public String getWebsite() {
+        return this.website;
+     }
+   
+     public void setWebsite(String value) {
+        this.website = value;
+     }
+   
+     public String getBio() {
+        return this.bio;
+     }
+   
+     public void setBio(String value) {
+        this.bio = value;
+     }
 }
