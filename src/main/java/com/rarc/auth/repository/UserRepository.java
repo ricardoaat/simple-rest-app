@@ -14,11 +14,4 @@ public interface UserRepository extends JpaRepository<User, Long > {
     Stream<User> findByNameReturnStream(@Param("username") String username);
 
     User findByUsername(String username);
-
-    /*   
-    @Override
-    @RestResource(exported = false)
-    public User findOne(Long id) ;
-    */
-
 }

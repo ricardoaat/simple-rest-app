@@ -41,7 +41,7 @@ public class ApiProfileController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-     @RequestMapping(value="profiles", method = RequestMethod.GET)
+    @RequestMapping(value="profiles", method = RequestMethod.GET)
     public ResponseEntity<List<Profile>> getProfiles() {
         List<Profile> profileList = new ArrayList<>();
         Iterable<Profile> profiles = profileRepository.findAll();
@@ -54,28 +54,24 @@ public class ApiProfileController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Profile>> getProfile(@RequestHeader(value="Authorization") String token) {
-
-        token = token.substring(7);
-
+    public ResponseEntity<List<Profile>> getProfile(@RequestHeader(value="Authorization") String token) throws Exception {
+        token = jwtTokenUtil.extractToken(token);
         JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(
             jwtTokenUtil.getUsernameFromToken(token));
 
-        User user = userServiceImpl.findByUserName(jwtUser.getUsername());
+            User user = userServiceImpl.findByUserName(jwtUser.getUsername());
         if (user == null){
             return new ResponseEntity<List<Profile>>(HttpStatus.NO_CONTENT);
         } 
-        
         List<Profile> profile = profileRepository.findByUser_Id(user.getId());
         
         return new ResponseEntity<List<Profile>>(profile, HttpStatus.OK);
     }
-    //ToDo: token validations, Exception handling
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Profile> setProfile(@RequestBody Profile profile,
         @RequestHeader(value="Authorization") String token){
-        
-        token = token.substring(7);
+        token = jwtTokenUtil.extractToken(token);
         String username = jwtTokenUtil.getUsernameFromToken(token);
 
         JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(username);
@@ -85,9 +81,14 @@ public class ApiProfileController {
         if (user == null){
             return new ResponseEntity<Profile>(HttpStatus.NO_CONTENT);
         }
-
         profile.setUser(userServiceImpl.findOneById(user.getId()));
         profileRepository.save(profile);
+
         return new ResponseEntity<Profile>(profile, HttpStatus.OK);
+    }
+
+    @RequestMapping(value="excep", method = RequestMethod.POST)
+    public ResponseEntity<?> testException() throws Exception {
+        throw new Exception("Le exception ");
     }
 }

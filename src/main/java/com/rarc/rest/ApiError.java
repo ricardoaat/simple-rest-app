@@ -5,21 +5,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import org.joda.time.LocalDateTime;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
+import java.io.Serializable;
 
-public class ApiError {
+public class ApiError implements Serializable {
 
+    private final static long serialVersionUID = -5360953025237602687L;
+    
     private HttpStatus status;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime timestamp;
     private String message;
     private String debugMessage;
- 
+    private String exMessage;
+
     private ApiError() {
         timestamp = LocalDateTime.now();
     }
@@ -28,12 +31,19 @@ public class ApiError {
         this();
         this.status = status;
     }
- 
+
+    public ApiError(HttpStatus status, String message) {
+        this();
+        this.status = status;
+        this.message = message;
+    }
+    
     public ApiError(HttpStatus status, Throwable ex) {
         this();
         this.status = status;
         this.message = "Unexpected error";
         this.debugMessage = ex.getLocalizedMessage();
+        this.exMessage = ex.getCause().getLocalizedMessage();
     }
  
     public ApiError(HttpStatus status, String message, Throwable ex) {
@@ -74,7 +84,15 @@ public class ApiError {
     public void setDebugMessage(String debugMessage){
         this.debugMessage = debugMessage;
     }
-    
+
+    public String getexMessage(){
+        return exMessage;
+    }
+
+    public void setexMessage(String exMessage){
+        this.exMessage = exMessage;
+    }    
+
     public LocalDateTime getTimestamp(){
         return timestamp;
     }

@@ -20,10 +20,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
         } catch (JwtException e) {
             setErrorResponse(HttpStatus.BAD_REQUEST, response, e, "Token Jwt Exception");
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            setErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, response, e, "Runtime Exception");
         }
     }
 
@@ -33,6 +29,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         ApiError apiError = new ApiError(status, message, ex);
         try {
             String json = apiError.convertToJson();
+            System.out.println("--Filter--");
             System.out.println(json);
             response.getWriter().write(json);
         } catch (IOException e) {
