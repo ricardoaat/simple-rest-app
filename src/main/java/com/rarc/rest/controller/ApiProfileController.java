@@ -61,11 +61,11 @@ public class ApiProfileController {
 
             User user = userServiceImpl.findByUserName(jwtUser.getUsername());
         if (user == null){
-            return new ResponseEntity<List<Profile>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } 
         List<Profile> profile = profileRepository.findByUser_Id(user.getId());
         
-        return new ResponseEntity<List<Profile>>(profile, HttpStatus.OK);
+        return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
