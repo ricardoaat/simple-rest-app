@@ -1,0 +1,11 @@
+BD
+----
+docker run -d -p 5432:5432 postgres
+
+Tomcat
+----
+docker run -d -p 8080:8080 tomcat
+
+Deploy
+----
+docker cp build/libs/simple-rest-app.war sharp_murdock:/usr/local/tomcat/webapps/simple-rest-app.war

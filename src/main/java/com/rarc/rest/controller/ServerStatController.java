@@ -22,9 +22,9 @@ public class ServerStatController {
     @RequestMapping(path = "/status", method = RequestMethod.GET)
     public ResponseEntity<Status> getStatus(){
         Status status = new Status();
-        status.setStatus("RUNNING BIIIIIIIIIIITCH");
+        status.setStatus("RUNNING");
         status.setCode(1);
-        System.out.println("Fetched status");
+
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
     
