@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.7.RELEASE'
+        springBootVersion = '1.5.9.RELEASE'
     }    
     repositories {
         mavenCentral()
@@ -8,7 +8,6 @@ buildscript {
     }
     dependencies {
         classpath (
-            'org.akhikhl.gretty:gretty:+',
             "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
             )
     }
@@ -16,8 +15,9 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'org.akhikhl.gretty'
-apply plugin: 'war'
+
+group = 'com.rarc.crud'
+version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -40,14 +40,8 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1"
     compile 'joda-time:joda-time:2.9'
     compile "org.jadira.usertype:usertype.core:5.0.0.GA"
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    compile "org.springframework.boot:spring-boot-starter-tomcat"
+
     testCompile 'junit:junit:4.12'
-}
-
-gretty {
-    httpPort = 9090
-    contextPath = '/simple-rest'
-    servletContainer = 'jetty9'
-
-    loggingLevel = 'ALL'
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
