@@ -16,8 +16,7 @@ import com.rarc.model.auth.User;
 public class ServerStatController {
 
     @Autowired
-    private UserRepository userRepository;  
-
+    private UserRepository userRepository;
 
     @RequestMapping(path = "/status", method = RequestMethod.GET)
     public ResponseEntity<Status> getStatus(){
@@ -27,7 +26,7 @@ public class ServerStatController {
 
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
-    
+
     @RequestMapping(path = "/test", method = RequestMethod.GET)
     public String printUsers(){
 
