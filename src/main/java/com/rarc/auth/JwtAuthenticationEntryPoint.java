@@ -26,7 +26,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Unauthorized User");
         try {
             String json = apiError.convertToJson();
-            System.out.println("Entry point jwt");
+            System.out.println(request.getRequestURL());
             System.out.println(json);
             response.getWriter().write(json);
         } catch (IOException e) {

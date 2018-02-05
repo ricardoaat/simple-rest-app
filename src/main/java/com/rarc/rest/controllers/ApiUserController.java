@@ -1,4 +1,4 @@
-package com.rarc.rest.controller;
+package com.rarc.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

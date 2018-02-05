@@ -17,7 +17,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
-
         } catch (JwtException e) {
             setErrorResponse(HttpStatus.BAD_REQUEST, response, e, "Token Jwt Exception");
         }

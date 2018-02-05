@@ -1,4 +1,4 @@
-package com.rarc.rest.controller;
+package com.rarc.rest.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
