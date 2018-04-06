@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.11.RELEASE'
     }    
     repositories {
         mavenCentral()
@@ -8,19 +8,27 @@ buildscript {
     }
     dependencies {
         classpath (
-            "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
+            "com.google.cloud.tools:appengine-gradle-plugin:+",
+            "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion",
             )
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
-
-group = 'com.rarc.crud'
-version = '0.0.1-SNAPSHOT'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.google.cloud.tools.appengine'
+apply plugin: 'wrapper'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+jar {
+    baseName = 'simple-rest'
+    version =  '0.1.0-SNAPSHOT'
+}
+group   = "com.ric.java"
+version = "0.1.0-SNAPSHOT"
 
 repositories {
     jcenter()
@@ -28,11 +36,17 @@ repositories {
 }
 
 dependencies {
+    //Google app engine
+    compile 'com.google.appengine:appengine:+'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'com.google.cloud:google-cloud-datastore:1.25.0'
+
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-starter-mobile"
     compile "org.springframework.boot:spring-boot-starter-data-rest"
+    compile "org.springframework.boot:spring-boot-starter-mobile"
     compile "org.springframework.boot:spring-boot-starter-security"
+
 
     compile 'io.jsonwebtoken:jjwt:0.7.0'
     compile "org.postgresql:postgresql:42.1.4"
@@ -40,11 +54,32 @@ dependencies {
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.1"
     compile 'joda-time:joda-time:2.9'
     compile "org.jadira.usertype:usertype.core:5.0.0.GA"
-    compile "org.springframework.boot:spring-boot-starter-tomcat"
 
+
+    //Swagger
     compile "io.springfox:springfox-swagger2:2.8.0"
     compile "io.springfox:springfox-swagger-ui:2.8.0"
 
+    //Testing
     testCompile 'junit:junit:4.12'
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile 'com.google.appengine:appengine-testing:+'
+    testCompile 'com.google.appengine:appengine-api-stubs:+'
+    testCompile 'com.google.appengine:appengine-tools-sdk:+'    
+}
+
+configurations {
+    compile.exclude module: "jul-to-slf4j"
+    compile.exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
+}
+
+appengine {
+  deploy {   // deploy configuration
+    stopPreviousVersion = true  // default - stop the current version
+    promote = true              // default - & make this the current version
+  }
+}
+
+wrapper {
+    gradleVersion = '4.6'
 }

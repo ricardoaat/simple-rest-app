@@ -53,6 +53,8 @@ cmake-build-debug/
 # Gradle
 .gradle
 build/
+out/
+bin/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamechache
